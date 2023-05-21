@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Editor</title>
+    <style>
+        .editor {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+    <script>
+        function makeTextBold() {
+            document.execCommand('bold', false, null);
+        }
+
+        function makeTextItalic() {
+            document.execCommand('italic', false, null);
+        }
+
+        function makeTextUnderline() {
+            document.execCommand('underline', false, null);
+        }
+
+        function alignTextLeft() {
+            document.execCommand('justifyLeft', false, null);
+        }
+
+        function alignTextCenter() {
+            document.execCommand('justifyCenter', false, null);
+        }
+
+        function alignTextRight() {
+            document.execCommand('justifyRight', false, null);
+        }
+
+        function changeTextColor(color) {
+            var editor = document.getElementsByClassName("editor")[0];
+            var selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                var range = selection.getRangeAt(0);
+                var span = document.createElement("span");
+                span.style.color = color;
+                span.appendChild(range.extractContents());
+                range.insertNode(span);
+            }
+            editor.focus();
+        }
+    </script>
+</head>
+<body>
+    <div class="editor" contenteditable="true">This is some sample text.</div>
+    
+    <button onclick="makeTextBold()">Bold</button>
+    <button onclick="makeTextItalic()">Italic</button>
+    <button onclick="makeTextUnderline()">Underline</button>
+    <button onclick="alignTextLeft()">Align Left</button>
+    <button onclick="alignTextCenter()">Align Center</button>
+    <button onclick="alignTextRight()">Align Right</button>
+    
+    <input type="color" id="colorPicker" onchange="changeTextColor(this.value)">
+    <label for="colorPicker">Text Color</label>
+</body>
+</html>
